@@ -1,0 +1,4 @@
+75c75
+<             ["cmake", "--build", ".", "--config", cfg], cwd=self.build_temp
+---
+>             ["cmake", "--build", ".", "--config", cfg, "-j 4"], cwd=self.build_temp

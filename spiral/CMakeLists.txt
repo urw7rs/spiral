@@ -1,4 +1,5 @@
 # Copyright 2019 DeepMind Technologies Limited.
+# 2 May 2020 - Modified by urw7rs
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,9 +15,9 @@
 
 # Libmypaint wrapper target.
 set(SOURCES
-    environments/libmypaint_wrapper/python/pylibmypaint.cc
-    environments/libmypaint_wrapper/brush.cc
-    environments/libmypaint_wrapper/surface.cc)
+    envs/libmypaint_wrapper/python/pylibmypaint.cc
+    envs/libmypaint_wrapper/brush.cc
+    envs/libmypaint_wrapper/surface.cc)
 
 pybind11_add_module(pylibmypaint ${SOURCES})
 add_dependencies(pylibmypaint libmypaint)
@@ -31,19 +32,19 @@ target_link_libraries(
 # Fluid Paint wrapper target.
 protobuf_generate_cpp(
     PROTO_SOURCES PROTO_HEADERS
-    environments/fluid_wrapper/protos/config.proto)
+    envs/fluid_wrapper/protos/config.proto)
 protobuf_generate_python(
     PROTO_PY
-    environments/fluid_wrapper/protos/config.proto)
+    envs/fluid_wrapper/protos/config.proto)
 
 set(SOURCES
-    environments/fluid_wrapper/python/pyfluid.cc
-    environments/fluid_wrapper/brush.cc
-    environments/fluid_wrapper/error.cc
-    environments/fluid_wrapper/renderer.cc
-    environments/fluid_wrapper/simulator.cc
-    environments/fluid_wrapper/utils.cc
-    environments/fluid_wrapper/wrapper.cc
+    envs/fluid_wrapper/python/pyfluid.cc
+    envs/fluid_wrapper/brush.cc
+    envs/fluid_wrapper/error.cc
+    envs/fluid_wrapper/renderer.cc
+    envs/fluid_wrapper/simulator.cc
+    envs/fluid_wrapper/utils.cc
+    envs/fluid_wrapper/wrapper.cc
     ${PROTO_SOURCES}
     ${PROTO_HEADERS})
 
@@ -63,5 +64,5 @@ target_link_libraries(
 add_custom_target(
     pyconfig
     ALL
-    COMMAND ${CMAKE_COMMAND} -E copy ${PROTO_PY} ${PROJECT_SOURCE_DIR}/spiral/environments
+    COMMAND ${CMAKE_COMMAND} -E copy ${PROTO_PY} ${PROJECT_SOURCE_DIR}/spiral/envs
     DEPENDS ${PROTO_PY})
