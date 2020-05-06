@@ -1,9 +1,5 @@
 # SPIRAL
 
-<p align="center">
-  <img width="75%" src="media/default_wgangp_celebahq64_gen_19steps.gif">
-</p>
-
 ## Overview
 
 This repository contains environments described in the ICML'18
