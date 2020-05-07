@@ -19,9 +19,9 @@
 #include <string>
 
 #include "libmypaint/mypaint-brush.h"
-#include "spiral/envs/libmypaint_wrapper/surface.h"
+#include "spiral_gym/envs/libmypaint_wrapper/surface.h"
 
-namespace spiral {
+namespace spiral_gym {
 namespace libmypaint {
 
 class BrushWrapper {
@@ -48,6 +48,6 @@ class BrushWrapper {
 };
 
 }  // namespace libmypaint
-}  // namespace spiral
+}  // namespace spiral_gym
 
 #endif  // SPIRAL_ENVIRONMENTS_LIBMYPAINT_WRAPPER_BRUSH_H_

@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "spiral/envs/fluid_wrapper/simulator.h"
+#include "spiral_gym/envs/fluid_wrapper/simulator.h"
 
 #include <algorithm>
 #include <numeric>
 #include <ostream>
 #include <utility>
 
-#include "spiral/envs/fluid_wrapper/brush.h"
-#include "spiral/envs/fluid_wrapper/utils.h"
+#include "spiral_gym/envs/fluid_wrapper/brush.h"
+#include "spiral_gym/envs/fluid_wrapper/utils.h"
 #include "absl/strings/string_view.h"
 
-namespace spiral {
+namespace spiral_gym {
 namespace fluid {
 
 Simulator::Simulator(const Config::Simulator& config) :
@@ -565,4 +565,4 @@ Simulator::Status Simulator::Simulate() {
 }
 
 }  // namespace fluid
-}  // namespace spiral
+}  // namespace spiral_gym

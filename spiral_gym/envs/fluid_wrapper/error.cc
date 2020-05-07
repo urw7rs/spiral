@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "spiral/envs/fluid_wrapper/error.h"
+#include "spiral_gym/envs/fluid_wrapper/error.h"
 
 #include <iostream>
 
-namespace spiral {
+namespace spiral_gym {
 
 void DefaultErrorHandler(const std::string& error_msg) {
   std::cerr << "SPIRAL Fatal Error: " << error_msg << std::endl << std::endl;
@@ -36,4 +36,4 @@ void FatalError(const std::string& error_msg) {
   std::exit(1);
 }
 
-}  // namespace spiral
+}  // namespace spiral_gym

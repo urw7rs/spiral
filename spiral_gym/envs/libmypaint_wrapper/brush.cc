@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "spiral/envs/libmypaint_wrapper/brush.h"
+#include "spiral_gym/envs/libmypaint_wrapper/brush.h"
 
 #include <fstream>
 #include <sstream>
@@ -20,7 +20,7 @@
 
 #include "glog/logging.h"
 
-namespace spiral {
+namespace spiral_gym {
 namespace libmypaint {
 
 BrushWrapper::BrushWrapper() : brush_(mypaint_brush_new()) {}
@@ -60,4 +60,4 @@ void BrushWrapper::StrokeTo(float x, float y, float pressure, float dtime) {
 }
 
 }  // namespace libmypaint
-}  // namespace spiral
+}  // namespace spiral_gym

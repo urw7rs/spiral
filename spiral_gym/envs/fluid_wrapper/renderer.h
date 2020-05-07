@@ -20,12 +20,12 @@
 #include "third_party/swiftshader/include/GLES3/gl3.h"
 #include "absl/container/flat_hash_map.h"
 #include "absl/strings/string_view.h"
-#include "spiral/envs/fluid_wrapper/brush.h"
+#include "spiral_gym/envs/fluid_wrapper/brush.h"
 #include "config.pb.h"
-#include "spiral/envs/fluid_wrapper/simulator.h"
-#include "spiral/envs/fluid_wrapper/utils.h"
+#include "spiral_gym/envs/fluid_wrapper/simulator.h"
+#include "spiral_gym/envs/fluid_wrapper/utils.h"
 
-namespace spiral {
+namespace spiral_gym {
 namespace fluid {
 
 class Renderer {
@@ -102,6 +102,6 @@ class Renderer {
 };
 
 }  // namespace fluid
-}  // namespace spiral
+}  // namespace spiral_gym
 
 #endif  // SPIRAL_ENVIRONMENTS_FLUID_WRAPPER_RENDERER_H_

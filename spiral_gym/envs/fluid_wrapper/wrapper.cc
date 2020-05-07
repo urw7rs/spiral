@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "spiral/envs/fluid_wrapper/wrapper.h"
+#include "spiral_gym/envs/fluid_wrapper/wrapper.h"
 
 #include <cstdio>
 #include <memory>
 #include <ostream>
 
 #include "absl/strings/str_cat.h"
-#include "spiral/envs/fluid_wrapper/error.h"
+#include "spiral_gym/envs/fluid_wrapper/error.h"
 #include "config.pb.h"
-#include "spiral/envs/fluid_wrapper/renderer.h"
+#include "spiral_gym/envs/fluid_wrapper/renderer.h"
 
 // Helper macro to check for EGL errors.
 #define CHECK_EGL_ERROR(egl_expr)                                          \
@@ -132,4 +132,4 @@ std::vector<int> Wrapper::GetCanvasDims() const {
 }
 
 }  // namespace fluid
-}  // namespace spiral
+}  // namespace spiral_gym

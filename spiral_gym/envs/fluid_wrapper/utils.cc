@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "spiral/envs/fluid_wrapper/utils.h"
+#include "spiral_gym/envs/fluid_wrapper/utils.h"
 
 #include <cmath>
 #include <fstream>
@@ -22,7 +22,7 @@
 #include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
 
-namespace spiral {
+namespace spiral_gym {
 namespace fluid {
 
 std::string ShaderSourceComposer::Compose(
@@ -195,4 +195,4 @@ void HsvToRyb(float h, float s, float v, float *r, float *g, float *b) {
 }
 
 }  // namespace fluid
-}  // namespace spiral
+}  // namespace spiral_gym

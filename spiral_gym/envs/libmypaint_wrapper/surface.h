@@ -24,7 +24,7 @@
 #include "libmypaint/mypaint-glib-compat.h"
 #include "libmypaint/mypaint-tiled-surface.h"
 
-namespace spiral {
+namespace spiral_gym {
 namespace libmypaint {
 
 struct Surface : MyPaintTiledSurface {
@@ -71,6 +71,6 @@ class SurfaceWrapper {
 };
 
 }  // namespace libmypaint
-}  // namespace spiral
+}  // namespace spiral_gym
 
 #endif  // SPIRAL_ENVIRONMENTS_LIBMYPAINT_WRAPPER_SURFACE_H_

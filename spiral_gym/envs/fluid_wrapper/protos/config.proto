@@ -1,6 +1,6 @@
 syntax = "proto2";
 
-package spiral.fluid;
+package spiral_gym.fluid;
 
 message Config {
   message Brush {

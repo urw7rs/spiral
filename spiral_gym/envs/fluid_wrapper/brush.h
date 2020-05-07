@@ -24,9 +24,9 @@
 #include "absl/container/flat_hash_map.h"
 #include "absl/strings/string_view.h"
 #include "config.pb.h"
-#include "spiral/envs/fluid_wrapper/utils.h"
+#include "spiral_gym/envs/fluid_wrapper/utils.h"
 
-namespace spiral {
+namespace spiral_gym {
 namespace fluid {
 
 class Brush {
@@ -144,6 +144,6 @@ class Brush {
 };
 
 }  // namespace fluid
-}  // namespace spiral
+}  // namespace spiral_gym
 
 #endif  // SPIRAL_ENVIRONMENTS_FLUID_WRAPPER_BRUSH_H_
