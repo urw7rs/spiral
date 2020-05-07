@@ -16,17 +16,17 @@
 from gym.envs.registration import register
 
 register(
-    id="Libmypaint-v0", entry_point="spiral.envs:LibMyPaint",
+    id="Libmypaint-v0", entry_point="spiral_gym.envs:LibMyPaint",
 )
 
 register(
-    id="Fluid-v0", entry_point="spiral.envs:FluidPaint",
+    id="Fluid-v0", entry_point="spiral_gym.envs:FluidPaint",
 )
 
 register(
-    id="Libmypaint-v1", entry_point="spiral.envs:LibMyPaintCompound",
+    id="Libmypaint-v1", entry_point="spiral_gym.envs:LibMyPaintCompound",
 )
 
 register(
-    id="Fluid-v1", entry_point="spiral.envs:FluidPaintCompound",
+    id="Fluid-v1", entry_point="spiral_gym.envs:FluidPaintCompound",
 )

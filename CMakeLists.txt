@@ -13,7 +13,7 @@
 # limitations under the License.
 
 cmake_minimum_required(VERSION 3.14)
-project(spiral)
+project(spiral_gym)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 
@@ -50,4 +50,4 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/swiftshader)
 set(PYBIND11_PYTHON_VERSION ${Python3_VERSION})
 add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/pybind11)
 
-add_subdirectory(spiral)
+add_subdirectory(spiral_gym)
