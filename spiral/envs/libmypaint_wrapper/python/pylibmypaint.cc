@@ -19,10 +19,10 @@
 
 namespace py = pybind11;
 
-#include "spiral_gym/envs/libmypaint_wrapper/brush.h"
-#include "spiral_gym/envs/libmypaint_wrapper/surface.h"
+#include "spiral/envs/libmypaint_wrapper/brush.h"
+#include "spiral/envs/libmypaint_wrapper/surface.h"
 
-namespace spiral_gym {
+namespace spiral {
 namespace libmypaint {
 
 PYBIND11_MODULE(pylibmypaint, m) {
@@ -64,4 +64,4 @@ PYBIND11_MODULE(pylibmypaint, m) {
 }
 
 }  // namespace libmypaint
-}  // namespace spiral_gym
+}  // namespace spiral

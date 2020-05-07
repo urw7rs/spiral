@@ -64,5 +64,5 @@ target_link_libraries(
 add_custom_target(
     pyconfig
     ALL
-    COMMAND ${CMAKE_COMMAND} -E copy ${PROTO_PY} ${PROJECT_SOURCE_DIR}/spiral_gym/envs
+    COMMAND ${CMAKE_COMMAND} -E copy ${PROTO_PY} ${PROJECT_SOURCE_DIR}/spiral/envs
     DEPENDS ${PROTO_PY})

@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "spiral_gym/envs/fluid_wrapper/brush.h"
+#include "spiral/envs/fluid_wrapper/brush.h"
 
 #include <algorithm>
 #include <cstdint>
 #include <random>
 
 #include "absl/strings/string_view.h"
-#include "spiral_gym/envs/fluid_wrapper/utils.h"
+#include "spiral/envs/fluid_wrapper/utils.h"
 
-namespace spiral_gym {
+namespace spiral {
 namespace fluid {
 
 Brush::Brush(const Config::Brush& config) :
@@ -545,4 +545,4 @@ void Brush::Update(float x, float y, float z, float scale) {
 }
 
 }  // namespace fluid
-}  // namespace spiral_gym
+}  // namespace spiral

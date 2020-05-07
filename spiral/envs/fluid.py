@@ -29,9 +29,9 @@ from gym import spaces
 import numpy as np
 from six.moves import xrange
 
-from spiral_gym.envs import utils
-from spiral_gym.envs import config_pb2
-from spiral_gym.envs import pyfluid
+from spiral.envs import utils
+from spiral.envs import config_pb2
+from spiral.envs import pyfluid
 
 
 def mix(a, b, t):

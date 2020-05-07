@@ -31,8 +31,8 @@ import enum
 import numpy as np
 from six.moves import xrange
 
-from spiral_gym.envs import utils
-from spiral_gym.envs import pylibmypaint
+from spiral.envs import utils
+from spiral.envs import pylibmypaint
 
 
 class BrushSettings(enum.IntEnum):

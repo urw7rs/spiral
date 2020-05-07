@@ -79,11 +79,11 @@ class CMakeBuildExt(build_ext):
 spiral_extension = CMakeExtension("spiral")
 
 setup(
-    name="spiral_gym",
+    name="spiral",
     version="1.0",
     author="DeepMind",
     license="Apache License, Version 2.0",
-    packages=find_packages(include=["spiral_gym*"]),
+    packages=find_packages(include=["spiral*"]),
     python_requires=">=3.6",
     setup_requires=[],
     install_requires=["six", "scipy", "numpy", "gym"],

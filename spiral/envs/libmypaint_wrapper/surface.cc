@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "spiral_gym/envs/libmypaint_wrapper/surface.h"
+#include "spiral/envs/libmypaint_wrapper/surface.h"
 
 #include <algorithm>
 #include <cstdint>
@@ -21,7 +21,7 @@
 #include "absl/memory/memory.h"
 #include "libmypaint/mypaint-surface.h"
 
-namespace spiral_gym {
+namespace spiral {
 namespace libmypaint {
 namespace {
 
@@ -168,4 +168,4 @@ std::vector<int> SurfaceWrapper::GetBufferDims() const {
 }
 
 }  // namespace libmypaint
-}  // namespace spiral_gym
+}  // namespace spiral

@@ -23,9 +23,9 @@
 namespace py = pybind11;
 
 #include "config.pb.h"
-#include "spiral_gym/envs/fluid_wrapper/wrapper.h"
+#include "spiral/envs/fluid_wrapper/wrapper.h"
 
-namespace spiral_gym {
+namespace spiral {
 namespace fluid {
 
 PYBIND11_MODULE(pyfluid, m) {
@@ -52,4 +52,4 @@ PYBIND11_MODULE(pyfluid, m) {
 }
 
 }  // namespace fluid
-}  // namespace spiral_gym
+}  // namespace spiral

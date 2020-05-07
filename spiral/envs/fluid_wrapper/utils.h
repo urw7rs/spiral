@@ -23,7 +23,7 @@
 #include "absl/container/flat_hash_map.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
-#include "spiral_gym/envs/fluid_wrapper/error.h"
+#include "spiral/envs/fluid_wrapper/error.h"
 
 #define CHECK_GL_ERROR(glexpr)                                            \
   do {                                                                    \
@@ -204,6 +204,6 @@ inline float mix(float a, float b, float t) {
 void HsvToRyb(float h, float s, float v, float *r, float *g, float *b);
 
 }  // namespace fluid
-}  // namespace spiral_gym
+}  // namespace spiral
 
 #endif  // SPIRAL_ENVIRONMENTS_FLUID_WRAPPER_UTILS_H_

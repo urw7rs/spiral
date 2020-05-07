@@ -17,7 +17,7 @@
 
 #include <string>
 
-namespace spiral_gym {
+namespace spiral {
 
 // When an error is encountered, Spiral code should call SpielFatalError()
 // which will forward the message to the current error handler.
