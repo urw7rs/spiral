@@ -1,4 +1,4 @@
-# SPIRAL
+# SPIRAL_GYM
 
 ## Overview
 
@@ -13,8 +13,8 @@ If you feel an immediate urge to dive into the code the most relevant files are:
 
 | Path | Description |
 | :--- | :--- |
-| [`spiral/envs/libmypaint.py`](spiral/environments/libmypaint.py) | The `libmypaint`-based environment |
-| [`spiral/envs/fluid.py`](spiral/environments/fluid.py) | The `Fluid Paint`-based environment |
+| [`spiral_gym/envs/libmypaint.py`](spiral_gym/envs/libmypaint.py) | The `libmypaint`-based environment |
+| [`spiral_gym/envs/fluid.py`](spiral_gym/envs/fluid.py) | The `Fluid Paint`-based environment |
 
 ## Installation
 
@@ -25,8 +25,8 @@ for other Linux distributions.
 Clone this repository and fetch the external submodules:
 
 ```shell
-git clone https://github.com/urw7rs/spiral.git
-cd spiral
+git clone https://github.com/urw7rs/spiral_gym.git
+cd spiral_gym
 git submodule update --init --recursive
 ```
 
@@ -65,14 +65,6 @@ them by running the following commands:
 ```shell
 git clone https://github.com/dli/paint third_party/paint
 patch third_party/paint/shaders/setbristles.frag third_party/paint-setbristles.patch
-```
-
-Optionally, in order to be able to try out the package in the provided
-`jupyter` [notebook](notebooks/spiral-demo.ipynb), you’ll need to install
-the following packages:
-
-```shell
-pip3 install matplotlib jupyter
 ```
 
 ## Usage
