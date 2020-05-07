@@ -19,11 +19,11 @@
 #include <cstdint>
 #include <vector>
 
-#include "spiral/envs/fluid_wrapper/egl.h"
+#include "spiral_gym/envs/fluid_wrapper/egl.h"
 #include "config.pb.h"
-#include "spiral/envs/fluid_wrapper/renderer.h"
+#include "spiral_gym/envs/fluid_wrapper/renderer.h"
 
-namespace spiral {
+namespace spiral_gym {
 namespace fluid {
 
 class Wrapper {
@@ -64,6 +64,6 @@ class Wrapper {
 };
 
 }  // namespace fluid
-}  // namespace spiral
+}  // namespace spiral_gym
 
 #endif  // SPIRAL_ENVIRONMENTS_FLUID_WRAPPER_WRAPPER_H_
