@@ -1,4 +1,9 @@
-75c75
-<             ["cmake", "--build", ".", "--config", cfg], cwd=self.build_temp
----
->             ["cmake", "--build", ".", "--config", cfg, "-j 4"], cwd=self.build_temp
+--- a/setup.py
++++ b/setup.py
+@@ -72,7 +72,7 @@ class CMakeBuildExt(build_ext):
+     def build_cmake(self, ext):
+         cfg = "Debug" if self.debug else "Release"
+         subprocess.check_call(
+-            ["cmake", "--build", ".", "--config", cfg], cwd=self.build_temp
++            ["cmake", "--build", ".", "--config", "-j 4", cfg], cwd=self.build_temp
+         )
