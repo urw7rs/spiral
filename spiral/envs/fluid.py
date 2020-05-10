@@ -79,6 +79,9 @@ class FluidPaint(gym.Env):
     B_VALUES = np.linspace(0.0, 1.0, 20)
     A_VALUES = np.linspace(0.0, 1.0, 10)
 
+    def __init__(self):
+        self.viewer = None
+
     def configure(
         self,
         episode_length=20,
