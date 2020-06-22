@@ -302,7 +302,6 @@ class FluidPaint(gym.Env):
         self._episode_step += 1
         if self._episode_step == self._episode_length:
             done = True
-            self._episode_step = 1
         else:
             done = False
 
@@ -485,7 +484,6 @@ class FluidPaintCompound(FluidPaint):
         self._episode_step += 1
         if self._episode_step == self._episode_length:
             done = True
-            self._episode_step = 1
         else:
             done = False
 
