@@ -127,6 +127,33 @@ class LibMyPaint(gym.Env):
     COLOR_ACTIONS = ["red", "green", "blue"]
     BRUSH_APPEARANCE_PARAMS = ["pressure", "log_size", "hue", "saturation", "value"]
 
+    ACTION_MASKS = {
+        "paint": collections.OrderedDict(
+            [
+                ("control", 1.0),
+                ("end", 1.0),
+                ("flag", 1.0),
+                ("pressure", 1.0),
+                ("size", 1.0),
+                ("red", 1.0),
+                ("green", 1.0),
+                ("blue", 1.0),
+            ]
+        ),
+        "move": collections.OrderedDict(
+            [
+                ("control", 0.0),
+                ("end", 1.0),
+                ("flag", 1.0),
+                ("pressure", 0.0),
+                ("size", 0.0),
+                ("red", 0.0),
+                ("green", 0.0),
+                ("blue", 0.0),
+            ]
+        ),
+    }
+
     STROKES_PER_STEP = 50
     DTIME = 0.1
 
@@ -179,19 +206,30 @@ class LibMyPaint(gym.Env):
                 ("blue", len(self.B_VALUES)),
             ]
         )
+        self._action_masks = copy.deepcopy(self.ACTION_MASKS)
+
+        def remove_action_mask(name):
+            for k in self._action_masks.keys():
+                del self._action_masks[k][name]
 
         if not self._use_pressure:
             del self._action_space["pressure"]
+            remove_action_mask("pressure")
 
         if len(self._log_brush_sizes) > 1:
             self._use_size = True
         else:
-            del self._action_space["size"]
+            del self._action_spec["size"]
+            remove_action_mask("size")
             self._use_size = False
 
         if not self._use_color:
             for k in self.COLOR_ACTIONS:
                 del self._action_space[k]
+                remove_action_mask(k)
+
+        for k, v in self._action_masks.items():
+            self._action_masks[k] = np.array(list(v.values()), dtype=np.float32)
 
         self.action_space = spaces.MultiDiscrete(list(self._action_space.values()))
         self.order = list(self._action_space.keys())
@@ -397,7 +435,11 @@ class LibMyPaint(gym.Env):
         self._reset_brush_params()
 
         self.episode_step = 1
-        return self._get_canvas()
+        action_mask = self._action_masks["move"]
+
+        obs = {"canvas": self._get_canvas(), "action_mask": action_mask}
+
+        return obs
 
     def step(self, action):
         """Performs an environment step."""
@@ -408,18 +450,21 @@ class LibMyPaint(gym.Env):
 
         # Perform action.
         self._surface.BeginAtomic()
-
         if flag == 1:  # The agent produces a visible stroke.
+            action_mask = self._action_masks["paint"]
             y_c, x_c = loc_control
             y_e, x_e = loc_end
             self._bezier_to(y_c, x_c, y_e, x_e, pressure, log_size, red, green, blue)
         elif flag == 0:  # The agent moves to a new location.
+            action_mask = self._action_masks["move"]
             y_e, x_e = loc_end
             self._move_to(y_e, x_e)
         else:
             raise ValueError("Invalid flag value")
 
         self._surface.EndAtomic()
+
+        obs = {"canvas": self._get_canvas(), "action_mask": action_mask}
 
         # Handle termination of the episode.
         self._episode_step += 1
@@ -428,7 +473,7 @@ class LibMyPaint(gym.Env):
         else:
             done = False
 
-        return self._get_canvas(), 0.0, done, {}
+        return obs, 0.0, done, {}
 
     def close(self):
         if self.view is not None:
@@ -577,6 +622,7 @@ class LibMyPaintCompound(LibMyPaint):
 
         reward = 0.0
         if flag == 1:  # The agent produces a visible stroke.
+            action_mask = self._action_masks["move"]
             self._bezier_to(self.locations, pressure, log_size, red, green, blue)
             self._move_to(y_c, x_c)
             self.locations = [[y_c, x_c]]
@@ -585,12 +631,15 @@ class LibMyPaintCompound(LibMyPaint):
             reward -= self.stroke_length * self.stroke_length_penalty
             self.stroke_length = 0
         elif flag == 0:
+            action_mask = self._action_masks["paint"]
             self.locations.append([y_c, x_c])
             self.stroke_length += 1
         else:
             raise ValueError("Invalid flag value")
 
         self._surface.EndAtomic()
+
+        obs = {"canvas": self._get_canvas(), "action_mask": action_mask}
 
         # Handle termination of the episode.
         self._episode_step += 1
@@ -599,7 +648,7 @@ class LibMyPaintCompound(LibMyPaint):
         else:
             done = False
 
-        return self._get_canvas(), reward, done, {}
+        return obs, reward, done, {}
 
     def reset(self):
         self._surface.Clear()
@@ -607,4 +656,8 @@ class LibMyPaintCompound(LibMyPaint):
 
         self.episode_step = 1
         self.stroke_length = 0
-        return self._get_canvas()
+        action_mask = self._action_masks["paint"]
+
+        obs = {"canvas": self._get_canvas(), "action_mask": action_mask}
+
+        return obs

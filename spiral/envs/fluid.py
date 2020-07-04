@@ -72,6 +72,35 @@ class FluidPaint(gym.Env):
     SPATIAL_ACTIONS = ["control", "end"]
     BRUSH_APPEARANCE_PARAMS = ["size", "hue", "saturation", "value", "alpha"]
 
+    ACTION_MASKS = {
+        "paint": collections.OrderedDict(
+            [
+                ("control", 1.0),
+                ("end", 1.0),
+                ("flag", 1.0),
+                ("speed", 1.0),
+                ("size", 1.0),
+                ("red", 1.0),
+                ("green", 1.0),
+                ("blue", 1.0),
+                ("alpha", 1.0),
+            ]
+        ),
+        "move": collections.OrderedDict(
+            [
+                ("control", 0.0),
+                ("end", 1.0),
+                ("flag", 1.0),
+                ("speed", 1.0),
+                ("size", 0.0),
+                ("red", 0.0),
+                ("green", 0.0),
+                ("blue", 0.0),
+                ("alpha", 0.0),
+            ]
+        ),
+    }
+
     STROKES_PER_STEP = 5 * np.arange(2, 11)
 
     R_VALUES = np.linspace(0.0, 1.0, 20)
@@ -109,8 +138,13 @@ class FluidPaint(gym.Env):
                 ("alpha", len(self.A_VALUES)),
             ]
         )
+
         self.action_space = spaces.MultiDiscrete(list(self._action_space.values()))
-        self.order = list(self._action_space.keys())
+
+        self._action_masks = copy.deepcopy(self.ACTION_MASKS)
+
+        for k, v in self._action_masks.items():
+            self._action_masks[k] = np.array(list(v.values()), dtype=np.float32)
 
         self.observation_space = spaces.Box(
             low=0,
@@ -268,8 +302,11 @@ class FluidPaint(gym.Env):
         self._wrapper.Update(0.0, 0.0, self._brush_params["size"], False)
 
         self.episode_step = 1
+        action_mask = self._action_masks["move"]
 
-        return self._get_canvas()
+        obs = {"canvas": self._get_canvas(), "action_mask": action_mask}
+
+        return obs
 
     def step(self, action):
         """Performs an environment step."""
@@ -287,16 +324,20 @@ class FluidPaint(gym.Env):
 
         # Perform action.
         if flag == 1:  # The agent produces a visible stroke.
+            action_mask = self._action_masks["paint"]
             y_c, x_c = loc_control
             y_e, x_e = loc_end
             self._bezier_to(
                 y_c, x_c, y_e, x_e, num_strokes, size, red, green, blue, alpha
             )
         elif flag == 0:  # The agent moves to a new location.
+            action_mask = self._action_masks["move"]
             y_e, x_e = loc_end
             self._move_to(y_e, x_e, num_strokes)
         else:
             raise ValueError("Invalid flag value")
+
+        obs = {"canvas": self._get_canvas(), "action_mask": action_mask}
 
         # Handle termination of the episode.
         self._episode_step += 1
@@ -305,7 +346,7 @@ class FluidPaint(gym.Env):
         else:
             done = False
 
-        return self._get_canvas(), 0.0, done, {}
+        return obs, 0.0, done, {}
 
     def render(self, mode="human"):
         canvas = self._get_canvas()
@@ -467,6 +508,7 @@ class FluidPaintCompound(FluidPaint):
         reward = 0.0
         # Perform action.
         if flag == 1:  # The agent produces a visible stroke.
+            action_mask = self._action_masks["move"]
             self._bezier_to(self.locations, num_strokes, size, red, green, blue, alpha)
             self._move_to(y_c, x_c, num_strokes)
             self.locations = [[y_c, x_c]]
@@ -475,10 +517,13 @@ class FluidPaintCompound(FluidPaint):
             reward -= self.stroke_length * self.stroke_length_penalty
             self.stroke_length = 0
         elif flag == 0:
+            action_mask = self._action_masks["paint"]
             self.locations.append([y_c, x_c])
             self.stroke_length += 1
         else:
             raise ValueError("Invalid flag value")
+
+        obs = {"canvas": self._get_canvas(), "action_mask": action_mask}
 
         # Handle termination of the episode.
         self._episode_step += 1
@@ -487,4 +532,19 @@ class FluidPaintCompound(FluidPaint):
         else:
             done = False
 
-        return self._get_canvas(), reward, done, {}
+        return obs, reward, done, {}
+
+    def reset(self):
+        self._wrapper.Reset()
+        self._reset_brush_params()
+
+        # The first call of `Update()` after `Reset()` initializes the brush.
+        # We don't need to simulate movement to the initial position.
+        self._wrapper.Update(0.0, 0.0, self._brush_params["size"], False)
+
+        self.episode_step = 1
+        action_mask = self._action_masks["paint"]
+
+        obs = {"canvas": self._get_canvas(), "action_mask": action_mask}
+
+        return obs
