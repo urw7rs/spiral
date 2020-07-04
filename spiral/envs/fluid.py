@@ -140,6 +140,7 @@ class FluidPaint(gym.Env):
         )
 
         self.action_space = spaces.MultiDiscrete(list(self._action_space.values()))
+        self.order = list(self._action_space.keys())
 
         self._action_masks = copy.deepcopy(self.ACTION_MASKS)
 
