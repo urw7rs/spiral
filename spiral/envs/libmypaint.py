@@ -434,7 +434,7 @@ class LibMyPaint(gym.Env):
         self._surface.Clear()
         self._reset_brush_params()
 
-        self.episode_step = 1
+        self._episode_step = 1
         action_mask = self._action_masks["move"]
 
         obs = {"canvas": self._get_canvas(), "action_mask": action_mask}
@@ -654,7 +654,7 @@ class LibMyPaintCompound(LibMyPaint):
         self._surface.Clear()
         self._reset_brush_params()
 
-        self.episode_step = 1
+        self._episode_step = 1
         self.stroke_length = 0
         action_mask = self._action_masks["paint"]
 

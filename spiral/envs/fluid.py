@@ -302,7 +302,7 @@ class FluidPaint(gym.Env):
         # We don't need to simulate movement to the initial position.
         self._wrapper.Update(0.0, 0.0, self._brush_params["size"], False)
 
-        self.episode_step = 1
+        self._episode_step = 1
         action_mask = self._action_masks["move"]
 
         obs = {"canvas": self._get_canvas(), "action_mask": action_mask}
@@ -543,7 +543,7 @@ class FluidPaintCompound(FluidPaint):
         # We don't need to simulate movement to the initial position.
         self._wrapper.Update(0.0, 0.0, self._brush_params["size"], False)
 
-        self.episode_step = 1
+        self._episode_step = 1
         action_mask = self._action_masks["paint"]
 
         obs = {"canvas": self._get_canvas(), "action_mask": action_mask}
