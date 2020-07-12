@@ -234,11 +234,20 @@ class LibMyPaint(gym.Env):
         self.action_space = spaces.MultiDiscrete(list(self._action_space.values()))
         self.order = list(self._action_space.keys())
 
-        self.observation_space = spaces.Box(
-            low=0,
-            high=255,
-            dtype=np.uint8,
-            shape=(self._canvas_width, self._canvas_width, self._output_channels),
+        self.observation_space = spaces.Dict(
+            {
+                "canvas": spaces.Box(
+                    low=0,
+                    high=255,
+                    dtype=np.uint8,
+                    shape=(
+                        self._canvas_width,
+                        self._canvas_width,
+                        self._output_channels,
+                    ),
+                ),
+                "action_mask": spaces.MultiBinary(len(self.order)),
+            }
         )
 
         # Setup the painting surface.
@@ -499,6 +508,37 @@ class LibMyPaintCompound(LibMyPaint):
         super(LibMyPaintCompound, self).__init__()
         self.new_stroke_penalty = 0.0
         self.stroke_length_penalty = 0.0
+
+    def configure(
+        self,
+        new_stroke_penalty=0.0,
+        stroke_length_penalty=0.0,
+        episode_length=20,
+        canvas_width=64,
+        grid_width=32,
+        brush_type="classic/dry_brush",
+        brush_sizes=[1, 2, 4, 6, 12, 24],
+        use_color=True,
+        use_pressure=True,
+        use_alpha=False,
+        background="white",
+        brushes_basedir="",
+    ):
+        super().configure(
+            episode_length,
+            canvas_width,
+            grid_width,
+            brush_type,
+            brush_sizes,
+            use_color,
+            use_pressure,
+            use_alpha,
+            background,
+            brushes_basedir,
+        )
+
+        self.new_stroke_penalty = new_stroke_penalty
+        self.stroke_length_penalty = stroke_length_penalty
 
     def set_new_stroke_penalty(self, penalty):
         self.new_stroke_penalty = penalty

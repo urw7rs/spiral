@@ -139,19 +139,24 @@ class FluidPaint(gym.Env):
             ]
         )
 
-        self.action_space = spaces.MultiDiscrete(list(self._action_space.values()))
-        self.order = list(self._action_space.keys())
-
         self._action_masks = copy.deepcopy(self.ACTION_MASKS)
 
         for k, v in self._action_masks.items():
             self._action_masks[k] = np.array(list(v.values()), dtype=np.float32)
 
-        self.observation_space = spaces.Box(
-            low=0,
-            high=255,
-            dtype=np.uint8,
-            shape=(self._canvas_width, self._canvas_width, 3),
+        self.action_space = spaces.MultiDiscrete(list(self._action_space.values()))
+        self.order = list(self._action_space.keys())
+
+        self.observation_space = spaces.Dict(
+            {
+                "canvas": spaces.Box(
+                    low=0,
+                    high=255,
+                    dtype=np.uint8,
+                    shape=(self._canvas_width, self._canvas_width, 3),
+                ),
+                "action_mask": spaces.MultiBinary(len(self.order)),
+            }
         )
 
         self._brush_params = None
@@ -384,6 +389,23 @@ class FluidPaintCompound(FluidPaint):
         self.new_stroke_penalty = 0.0
         self.stroke_length_penalty = 0.0
 
+    def configure(
+        self,
+        new_stroke_penalty=0.0,
+        stroke_length_penalty=0.0,
+        episode_length=20,
+        canvas_width=64,
+        grid_width=32,
+        brush_sizes=[1, 2, 4, 6, 12, 24],
+        shaders_basedir="",
+    ):
+        super().configure(
+            episode_length, canvas_width, grid_width, brush_sizes, shaders_basedir
+        )
+
+        self.new_stroke_penalty = new_stroke_penalty
+        self.stroke_length_penalty = stroke_length_penalty
+
     def set_new_stroke_penalty(self, penalty):
         self.new_stroke_penalty = penalty
 
@@ -544,6 +566,7 @@ class FluidPaintCompound(FluidPaint):
         self._wrapper.Update(0.0, 0.0, self._brush_params["size"], False)
 
         self._episode_step = 1
+        self.stroke_length = 0
         action_mask = self._action_masks["paint"]
 
         obs = {"canvas": self._get_canvas(), "action_mask": action_mask}
