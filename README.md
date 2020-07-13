@@ -25,8 +25,8 @@ for other Linux distributions.
 Clone this repository and fetch the external submodules:
 
 ```shell
-git clone https://github.com/urw7rs/spiral.git
-cd spiral
+git clone https://github.com/urw7rs/spiral-envs.git
+cd spiral-envs
 git submodule update --init --recursive
 ```
 
