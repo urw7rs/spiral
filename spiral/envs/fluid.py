@@ -171,7 +171,7 @@ class FluidPaint(gym.Env):
 
     def _get_canvas(self):
         canvas = self._wrapper.CanvasAsNumpy()[..., :3]
-        canvas = np.single(canvas) / 255.0
+        canvas = np.single(canvas)
         return canvas
 
     def _update_brush_params(self, **kwargs):
@@ -307,8 +307,13 @@ class FluidPaint(gym.Env):
         # We don't need to simulate movement to the initial position.
         self._wrapper.Update(0.0, 0.0, self._brush_params["size"], False)
 
-        self._episode_step = 1
+        self.stats = {
+            "total_strokes": 0,
+            "total_disjoint": 0,
+        }
+
         action_mask = self._action_masks["move"]
+        self._episode_step = 1
 
         obs = {"canvas": self._get_canvas(), "action_mask": action_mask}
 
@@ -336,6 +341,11 @@ class FluidPaint(gym.Env):
             self._bezier_to(
                 y_c, x_c, y_e, x_e, num_strokes, size, red, green, blue, alpha
             )
+
+            # Update episode statistics.
+            self.stats["total_strokes"] += 1
+            if not self._prev_brush_params["is_painting"]:
+                self.stats["total_disjoint"] += 1
         elif flag == 0:  # The agent moves to a new location.
             action_mask = self._action_masks["move"]
             y_e, x_e = loc_end
@@ -352,7 +362,7 @@ class FluidPaint(gym.Env):
         else:
             done = False
 
-        return obs, 0.0, done, {}
+        return obs, 0.0, done, self.stats
 
     def render(self, mode="human"):
         canvas = self._get_canvas()

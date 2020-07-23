@@ -289,7 +289,7 @@ class LibMyPaint(gym.Env):
         buf = self._surface.BufferAsNumpy()
         buf = buf.transpose((0, 2, 1, 3, 4))
         buf = buf.reshape((self._canvas_width, self._canvas_width, 4))
-        canvas = np.single(_fix15_to_rgba(buf)) / 255.0
+        canvas = np.single(_fix15_to_rgba(buf))
         if not self._use_color:
             canvas = canvas[..., 0:1]
         elif not self._use_alpha:
@@ -443,6 +443,11 @@ class LibMyPaint(gym.Env):
         self._surface.Clear()
         self._reset_brush_params()
 
+        self.stats = {
+            "total_strokes": 0,
+            "total_disjoint": 0,
+        }
+
         self._episode_step = 1
         action_mask = self._action_masks["move"]
 
@@ -464,6 +469,10 @@ class LibMyPaint(gym.Env):
             y_c, x_c = loc_control
             y_e, x_e = loc_end
             self._bezier_to(y_c, x_c, y_e, x_e, pressure, log_size, red, green, blue)
+            # Update episode statistics.
+            self.stats["total_strokes"] += 1
+            if not self._prev_brush_params["is_painting"]:
+                self.stats["total_disjoint"] += 1
         elif flag == 0:  # The agent moves to a new location.
             action_mask = self._action_masks["move"]
             y_e, x_e = loc_end
@@ -482,7 +491,7 @@ class LibMyPaint(gym.Env):
         else:
             done = False
 
-        return obs, 0.0, done, {}
+        return obs, 0.0, done, self.stats
 
     def close(self):
         if self.view is not None:
