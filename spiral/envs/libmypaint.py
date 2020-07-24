@@ -486,7 +486,7 @@ class LibMyPaint(gym.Env):
 
         # Handle termination of the episode.
         self._episode_step += 1
-        if self._episode_step > self._episode_length:
+        if self._episode_step == self._episode_length:
             done = True
         else:
             done = False
