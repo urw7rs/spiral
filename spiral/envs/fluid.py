@@ -321,6 +321,8 @@ class FluidPaint(gym.Env):
 
     def step(self, action):
         """Performs an environment step."""
+        action = dict(zip(self.order, action.squeeze().tolist()))
+
         (
             locations,
             flag,
@@ -526,6 +528,8 @@ class FluidPaintCompound(FluidPaint):
 
     def step(self, action):
         """Performs an environment step."""
+        action = dict(zip(self.order, action.squeeze().tolist()))
+
         (
             loc_control,
             flag,

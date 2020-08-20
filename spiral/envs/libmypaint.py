@@ -457,6 +457,8 @@ class LibMyPaint(gym.Env):
 
     def step(self, action):
         """Performs an environment step."""
+        action = dict(zip(self.order, action.squeeze().tolist()))
+
         locations, flag, pressure, log_size, red, green, blue = self._process_action(
             action
         )
@@ -661,6 +663,8 @@ class LibMyPaintCompound(LibMyPaint):
 
     def step(self, action):
         """Performs an environment step."""
+        action = dict(zip(self.order, action.squeeze().tolist()))
+
         loc_control, flag, pressure, log_size, red, green, blue = self._process_action(
             action
         )
