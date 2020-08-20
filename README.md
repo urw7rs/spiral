@@ -13,8 +13,8 @@ If you feel an immediate urge to dive into the code the most relevant files are:
 
 | Path | Description |
 | :--- | :--- |
-| [`spiral/envs/libmypaint.py`](spiral/environments/libmypaint.py) | The `libmypaint`-based environment |
-| [`spiral/envs/fluid.py`](spiral/environments/fluid.py) | The `Fluid Paint`-based environment |
+| [`spiral-envs/spiral/envs/libmypaint.py`](spiral-envs/spiral/environments/libmypaint.py) | The `libmypaint`-based environment |
+| [`spiral-envs/spiral/envs/fluid.py`](spiral-envs/spiral/environments/fluid.py) | The `Fluid Paint`-based environment |
 
 ## Installation
 
