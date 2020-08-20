@@ -67,14 +67,6 @@ git clone https://github.com/dli/paint third_party/paint
 patch third_party/paint/shaders/setbristles.frag third_party/paint-setbristles.patch
 ```
 
-Optionally, in order to be able to try out the package in the provided
-`jupyter` [notebook](notebooks/spiral-demo.ipynb), you’ll need to install
-the following packages:
-
-```shell
-pip3 install matplotlib jupyter
-```
-
 ## Usage
 
 For a basic example of how to use the package see [original repo](https://github.com/deepmind/spiral)
