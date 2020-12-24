@@ -5,5 +5,5 @@
          cfg = "Debug" if self.debug else "Release"
          subprocess.check_call(
 -            ["cmake", "--build", ".", "--config", cfg], cwd=self.build_temp
-+            ["cmake", "--build", ".", "--config", "-j 4", cfg], cwd=self.build_temp
++            ["cmake", "--build", ".", "--config", "-j", "4", cfg], cwd=self.build_temp
          )
