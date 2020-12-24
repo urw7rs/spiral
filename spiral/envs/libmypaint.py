@@ -219,7 +219,7 @@ class LibMyPaint(gym.Env):
         if len(self._log_brush_sizes) > 1:
             self._use_size = True
         else:
-            del self._action_spec["size"]
+            del self._action_space["size"]
             remove_action_mask("size")
             self._use_size = False
 
